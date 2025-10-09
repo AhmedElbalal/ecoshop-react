@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --tesla-blue: #00e5ff;
+  --tesla-dark: #0a0f1c;
+  --tesla-gray: #a1a1aa;
+  --tesla-border: rgba(0, 229, 255, 0.3);
+  --tesla-glow: 0 0 12px rgba(0, 229, 255, 0.6);
+}
+
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--tesla-dark), #000);
+  color: #e5e7eb; /* Tailwind text-gray-200 */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+h1, h2, h3 {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+
+button {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+button:hover {
+  transform: translateY(-2px);
+}
+
+
+.tesla-card {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: #0d1526;
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg, rgba(0,229,255,0.3), transparent) 1;
+  box-shadow: 0 0 10px rgba(0,229,255,0.15);
+  transition: all 0.4s ease;
+}
+.tesla-card:hover {
+  box-shadow: 0 0 20px rgba(0,229,255,0.35);
+  transform: translateY(-5px);
+}
+
+
+.tesla-btn {
+  background: linear-gradient(90deg, var(--tesla-blue), #0080ff);
+  box-shadow: var(--tesla-glow);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+}
+.tesla-btn:hover {
+  background: linear-gradient(90deg, #00b4d8, #0077b6);
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+
+.navbar {
+  background-color: rgba(10, 15, 28, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--tesla-border);
+}
+
+
+input,
+textarea,
+select {
+  background-color: transparent;
+  color: #e5e7eb;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+  border-color: var(--tesla-blue);
+}
