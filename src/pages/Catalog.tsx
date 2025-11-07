@@ -1,76 +1,70 @@
-import React, { useEffect, useState } from 'react'
-import { useCart } from '../context' // ✅ import cart hook
+import React from 'react'
+import Layout from '../components/Layout'
+import { useCart } from '../context/CartContext'
+import type { Product } from '../context/CartContext' // Import from context, not '../context'
 
-// ✅ Match your products.json structure
-interface Product {
-  id: number
-  slug: string
-  title: string
-  price: number
-  currency: string
-  image: string
-  rating: number
-  stock: number
-  category: string
-  shortDesc: string
-  longDesc: string
-  tags: string[]
+interface CatalogProps {
+  products: Product[]
 }
 
-export default function Catalog() {
-  const [products, setProducts] = useState<Product[]>([])
-  const { addToCart } = useCart() // ✅ use cart context
+export default function Catalog({ products }: CatalogProps) {
+  const { addToCart } = useCart()
 
-  useEffect(() => {
-    fetch('/products.json')
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error('Error loading products:', err))
-  }, [])
+  const handleAddToCart = (product: Product) => {
+    addToCart(product)
+    console.log('Added to cart:', product.title)
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0f1c] to-[#000] text-gray-200">
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        {/* Tesla-style Header */}
-        <h1 className="text-3xl md:text-4xl font-[Orbitron] text-center text-[var(--tesla-blue)] tracking-widest mb-8 drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">
-          ⚡ Product Catalog
-        </h1>
+    <Layout>
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              All Eco Products
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Browse our complete collection of sustainable, eco-friendly products
+            </p>
+          </div>
 
-        {/* Loading State */}
-        {products.length === 0 ? (
-          <p className="text-center text-gray-500">Loading products...</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Products Grid - Same as Home */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
               <div
                 key={product.id}
-                className="tesla-card flex flex-col p-4 rounded-xl shadow-md bg-[#0d1526] text-gray-200 hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] transition"
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 overflow-hidden group"
               >
                 {/* Product Image */}
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-xl mb-4"
-                />
+                <div className="relative overflow-hidden bg-gray-50">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=500&h=400&fit=crop&auto=format'
+                    }}
+                  />
+                </div>
 
-                {/* Product Title */}
-                <h2 className="text-lg font-semibold text-gray-100 mb-2">
-                  {product.title}
-                </h2>
+                {/* Product Info */}
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {product.title}
+                    </h3>
+                    <span className="text-xl font-bold text-green-600">
+                      ${product.price}
+                    </span>
+                  </div>
 
-                {/* Product Description */}
-                <p className="text-sm text-gray-400 mb-4 leading-relaxed">
-                  {product.shortDesc || product.longDesc}
-                </p>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                    {product.shortDesc}
+                  </p>
 
-                {/* Price + Add to Cart */}
-                <div className="flex justify-between items-center mt-auto">
-                  <span className="text-[var(--tesla-blue)] font-semibold">
-                    ${product.price.toFixed(2)} {product.currency}
-                  </span>
                   <button
-                    onClick={() => addToCart(product)}
-                    className="tesla-btn px-3 py-1.5 rounded-lg text-sm"
+                    onClick={() => handleAddToCart(product)}
+                    className="w-full py-3 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300"
                   >
                     Add to Cart
                   </button>
@@ -78,15 +72,8 @@ export default function Catalog() {
               </div>
             ))}
           </div>
-        )}
+        </div>
       </div>
-
-      {/* Footer */}
-      <footer className="text-center py-6 border-t border-[var(--tesla-border)] text-gray-500">
-        <p>
-          ⚡ {new Date().getFullYear()} Ecoshop 2025
-        </p>
-      </footer>
-    </div>
+    </Layout>
   )
 }

@@ -7,7 +7,6 @@ yarn-error.log*
 # Production builds
 dist/
 build/
-out/
 
 # Environment variables
 .env
@@ -16,9 +15,12 @@ out/
 .env.test.local
 .env.production.local
 
-# Database
-*.db
-*.sqlite
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+*.tgz
+*.tar.gz
 
 # Logs
 logs
@@ -30,19 +32,8 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory
+# Coverage directory used by tools like istanbul
 coverage/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Temporary folders
-tmp/
-temp/
+# TypeScript cache
+*.tsbuildinfo

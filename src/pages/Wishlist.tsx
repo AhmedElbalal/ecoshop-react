@@ -1,18 +1,23 @@
 import React from 'react'
+import Layout from '../components/Layout'
 
 export default function Wishlist() {
   return (
-    <div className="max-w-4xl mx-auto py-20 px-4 text-center">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">💖 Wishlist</h1>
-      <p className="text-gray-600 mb-6">
-        You haven’t added any favorites yet. Start browsing our products!
-      </p>
-      <a
-        href="/catalog"
-        className="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition"
-      >
-        Browse Products
-      </a>
-    </div>
+    <Layout>
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Your Wishlist
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Save your favorite eco-friendly products
+            </p>
+          </div>
+
+          {/* Your wishlist content here */}
+        </div>
+      </div>
+    </Layout>
   )
 }

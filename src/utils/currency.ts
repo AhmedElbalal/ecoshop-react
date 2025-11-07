@@ -1,3 +1,7 @@
-export function formatCurrency(value: number, currency: string) {
-  return new Intl.NumberFormat('en-CA', { style: 'currency', currency }).format(value)
+// utils/currency.ts
+export function formatCurrency(amount: number, currency: string = 'USD'): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
 }
