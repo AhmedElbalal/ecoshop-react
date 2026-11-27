@@ -1,6 +1,6 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import { CartProvider, useCart } from './CartContext';
 
 const product = { id: 1, title: 'Reusable Bottle', price: 20, image: '', shortDesc: 'Bottle' };
@@ -22,7 +22,7 @@ function CartHarness() {
 
 describe('CartProvider', () => {
   beforeEach(() => { localStorage.clear(); vi.useFakeTimers(); });
-  afterEach(() => { vi.useRealTimers(); });
+  afterEach(() => { cleanup(); vi.useRealTimers(); });
   it('adds a product, updates quantity and removes it', async () => {
     const { container } = render(<CartProvider><CartHarness /></CartProvider>);
     const click = async (label: string) => {
