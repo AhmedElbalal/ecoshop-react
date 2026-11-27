@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const location = useLocation();
 
   const { getCartCount, openCart } = useCart();
   const { user, logout, isAuthenticated, openLogin } = useAuth();
 
-  // Safe cart count implementation
-  useEffect(() => {
-    try {
-      if (typeof getCartCount === 'function') {
-        setCartCount(getCartCount());
-      }
-    } catch (error) {
-      console.warn('Cart context not available:', error);
-      setCartCount(0);
-    }
-  }, [location, getCartCount]);
+  const cartCount = getCartCount();
 
   // Handle scroll effect
   useEffect(() => {
@@ -32,11 +20,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
 
   const handleLogout = () => {
     logout();
